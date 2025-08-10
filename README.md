@@ -44,7 +44,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 python run_server.py
 ```
 
-### 4. 웹 브라우저에서 접속
+### 4. 웹 브라우저에서 접속 (로컬 환경)
 - 메인 홈: http://localhost:5000/home
 - 기록 보기: http://localhost:5000/records
 - 대화 시작: http://localhost:5000/chat_topics
