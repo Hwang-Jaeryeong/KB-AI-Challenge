@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KB HUG - 정보</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .footer-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .logo-section {
+            margin-bottom: 30px;
+        }
+
+        .kb-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .kb-symbol {
+            background: #FFD700;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .kb-text {
+            color: #666;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .motivation-message {
+            margin-bottom: 30px;
+        }
+
+        .motivation-line {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .links-section {
+            margin-bottom: 25px;
+        }
+
+        .footer-link {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #007AFF;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: #007AFF;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 25px 0;
+        }
+
+        .legal-links {
+            margin-bottom: 20px;
+        }
+
+        .legal-link {
+            display: inline-block;
+            color: #333;
+            text-decoration: underline;
+            font-size: 12px;
+            margin: 0 10px 10px 0;
+            transition: color 0.3s ease;
+        }
+
+        .legal-link:hover {
+            color: #007AFF;
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .home-button {
+            margin-top: 20px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .home-button:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 480px) {
+            .footer-card {
+                padding: 30px 20px;
+            }
+
+            .motivation-line {
+                font-size: 14px;
+            }
+
+            .social-icons {
+                gap: 12px;
+            }
+
+            .social-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="footer-card">
+        <div class="logo-section">
+            <div class="kb-logo">
+                <div class="kb-symbol">Kb</div>
+                <div class="kb-text">KB국민은행</div>
+            </div>
+        </div>
+
+        <div class="motivation-message">
+            <div class="motivation-line">오늘도 잘 버텨준 당신에게</div>
+            <div class="motivation-line">작은 쉼이 큰 변화를 만듭니다</div>
+        </div>
+
+        <div class="links-section">
+            <a href="#" class="footer-link">자주 묻는 질문</a>
+            <a href="#" class="footer-link">이벤트 정보</a>
+            <a href="#" class="footer-link">서비스 소개</a>
+        </div>
+
+        <div class="social-icons">
+            <div class="social-icon">f</div>
+            <div class="social-icon">📷</div>
+            <div class="social-icon">𝕏</div>
+            <div class="social-icon">in</div>
+            <div class="social-icon">▶️</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="legal-links">
+            <a href="#" class="legal-link">개인정보 정책</a>
+            <a href="#" class="legal-link">서비스 이용 약관</a>
+            <a href="#" class="legal-link">쿠키 설정</a>
+        </div>
+
+        <div class="copyright">
+            © KB HUG
+        </div>
+        
+        <button class="home-button" onclick="goHome()">🏠 홈으로 돌아가기</button>
+    </div>
+
+    <script>
+        function goHome() {
+            window.location.href = '/home';
+        }
+    </script>
+</body>
+</html>

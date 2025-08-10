@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 상담 챗봇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chat-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .chat-header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .chat-header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            word-wrap: break-word;
+        }
+        
+        .message.user .message-content {
+            background: #667eea;
+            color: white;
+        }
+        
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e9ecef;
+        }
+        
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .message.user .message-avatar {
+            background: #667eea;
+            color: white;
+        }
+        
+        .message.bot .message-avatar {
+            background: #28a745;
+            color: white;
+        }
+        
+        .chat-input {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .chat-input input:focus {
+            border-color: #667eea;
+        }
+        
+        .chat-input button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+        
+        .chat-input button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .chat-input button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .analysis-panel {
+            background: white;
+            border-top: 1px solid #e9ecef;
+            padding: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .analysis-item {
+            display: inline-block;
+            margin-right: 15px;
+            padding: 5px 10px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .dashboard-links {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .dashboard-links a {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+        
+        .dashboard-links a:hover {
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-links">
+        <a href="/dashboard/default_user">개인 대시보드</a>
+        <a href="/admin/dashboard">관리자 대시보드</a>
+    </div>
+    
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>🤖 AI 상담 챗봇</h1>
+            <p>당신의 마음을 들려주세요. 감정 분석과 상담을 도와드립니다.</p>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-avatar">AI</div>
+                <div class="message-content">
+                    안녕하세요! 저는 AI 상담사입니다. 오늘 하루는 어떠셨나요? 
+                    어떤 이야기든 편하게 들려주세요. 😊
+                </div>
+            </div>
+        </div>
+        
+        <div class="analysis-panel" id="analysisPanel" style="display: none;">
+            <div class="analysis-item">
+                <strong>감정:</strong> <span id="emotionResult">-</span>
+            </div>
+            <div class="analysis-item">
+                <strong>스트레스:</strong> <span id="stressResult">-</span>
+            </div>
+            <div class="analysis-item">
+                <strong>위험도:</strong> <span id="riskResult">-</span>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">
+            <p>AI가 분석 중입니다...</p>
+        </div>
+        
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="메시지를 입력하세요..." maxlength="500">
+            <button id="sendButton" onclick="sendMessage()">전송</button>
+        </div>
+    </div>
+
+    <script>
+        let currentUserId = 'default_user';
+        
+        function addMessage(content, isUser = false) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = isUser ? '나' : 'AI';
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.textContent = content;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(messageContent);
+            messagesContainer.appendChild(messageDiv);
+            
+            // 스크롤을 맨 아래로
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        function updateAnalysis(emotion, stress, risk) {
+            document.getElementById('emotionResult').textContent = emotion;
+            document.getElementById('stressResult').textContent = stress;
+            document.getElementById('riskResult').textContent = risk;
+            document.getElementById('analysisPanel').style.display = 'block';
+        }
+        
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const button = document.getElementById('sendButton');
+            const loading = document.getElementById('loading');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // UI 업데이트
+            addMessage(message, true);
+            input.value = '';
+            button.disabled = true;
+            loading.classList.add('show');
+            
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: currentUserId,
+                        message: message
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    addMessage('죄송합니다. 오류가 발생했습니다: ' + result.error);
+                } else {
+                    // AI 응답 추가
+                    addMessage(result.ai_response);
+                    
+                    // 분석 결과 업데이트
+                    const emotion = result.emotion_analysis.primary_emotion;
+                    const stress = result.stress_analysis.current_stress_score.toFixed(1);
+                    const risk = result.stress_analysis.risk_level;
+                    updateAnalysis(emotion, stress, risk);
+                }
+                
+            } catch (error) {
+                addMessage('죄송합니다. 네트워크 오류가 발생했습니다.');
+                console.error('Error:', error);
+            } finally {
+                button.disabled = false;
+                loading.classList.remove('show');
+            }
+        }
+        
+        // Enter 키로 메시지 전송
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        // 페이지 로드 시 입력창에 포커스
+        window.addEventListener('load', function() {
+            document.getElementById('messageInput').focus();
+        });
+    </script>
+</body>
+</html> 

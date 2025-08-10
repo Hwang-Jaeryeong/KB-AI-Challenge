@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KB HUG - 대화하기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .header-text {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding-top: 40px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .main-headline {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .sub-text {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .header-image {
+            width: 100%;
+            height: 200px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .content-block {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .content-block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .block-image {
+            width: 100%;
+            height: 150px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .category-tag {
+            display: inline-block;
+            background: #007AFF;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .block-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .block-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .author-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .author-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #FF6B35;
+        }
+
+        .post-meta {
+            font-size: 12px;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        .avatar-1 { background: #FFE4B5; }
+        .avatar-2 { background: #D2B48C; }
+        .avatar-3 { background: #90EE90; }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding-top: 30px;
+            }
+
+            .main-headline {
+                font-size: 24px;
+            }
+
+            .content-block {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-text">대화하기 - 3</div>
+    
+    <div class="container">
+        <div class="header-section">
+            <div class="page-title">대화하기</div>
+            <div class="main-headline">
+                당신의 마음, 들려주세요
+            </div>
+            <div class="sub-text">
+                어떤 얘기든 괜찮아요. 저는 들어줄 준비가 되어 있습니다.
+            </div>
+            <div class="header-image">
+                <span style="font-size: 40px; color: #999;">🏔️</span>
+            </div>
+        </div>
+
+        <div class="content-block" onclick="selectCharacter('customer', '플로라무')">
+            <div class="block-image">
+                <img src="/static/images/lama(all).png" alt="플로라무" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+            </div>
+            <div class="category-tag">고객</div>
+            <div class="block-title">
+                "힘든 하루, 제가 부드럽게 바꿔드릴게요"
+            </div>
+            <div class="block-description">
+                고객 홍대 후 남은 마음의 가시를 뽑아주는 부드러운 상담사
+            </div>
+            <div class="author-section">
+                <div class="avatar avatar-1">
+                    <img src="/static/images/lama(face).png" alt="플로라무" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                </div>
+                <div class="author-info">
+                    <div class="author-name">플로라무</div>
+                    <div class="post-meta">11 Jan 2025 • 5 min read</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block" onclick="selectCharacter('work', '심쿵비비')">
+            <div class="block-image">
+                <img src="/static/images/bear(all).png" alt="심쿵비비" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+            </div>
+            <div class="category-tag">조직·업무</div>
+            <div class="block-title">
+                "마음의 온도를 조금 높여드릴게요"
+            </div>
+            <div class="block-description">
+                상사 동료와의 거리, 포근하게 좁혀주는 관계 조율자
+            </div>
+            <div class="author-section">
+                <div class="avatar avatar-2">
+                    <img src="/static/images/bear(face).png" alt="심쿵비비" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                </div>
+                <div class="author-info">
+                    <div class="author-name">심쿵비비</div>
+                    <div class="post-meta">11 Jan 2025 • 5 min read</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block" onclick="selectCharacter('personal', '멜랑콜리')">
+            <div class="block-image">
+                <img src="/static/images/brocoli(all).png" alt="멜랑콜리" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+            </div>
+            <div class="category-tag">개인·번아웃</div>
+            <div class="block-title">
+                "당신의 하루에 초록빛 쉼표를"
+            </div>
+            <div class="block-description">
+                지친 몸과 마음에 푸른 위로를 전하는 힐링 브로콜리
+            </div>
+            <div class="author-section">
+                <div class="avatar avatar-3">
+                    <img src="/static/images/brocoli(face).png" alt="멜랑콜리" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                </div>
+                <div class="author-info">
+                    <div class="author-name">멜랑콜리</div>
+                    <div class="post-meta">11 Jan 2025 • 5 min read</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectCharacter(category, characterName) {
+            // 선택한 캐릭터 정보를 localStorage에 저장
+            localStorage.setItem('selectedCategory', category);
+            localStorage.setItem('selectedCharacter', characterName);
+            
+            // 채팅 인터페이스로 이동
+            window.location.href = '/chat_interface';
+        }
+    </script>
+</body>
+</html>

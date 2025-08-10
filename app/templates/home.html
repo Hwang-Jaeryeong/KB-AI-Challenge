@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KB HUG - 메인 홈</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header-text {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            margin: 60px 20px 30px 20px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .logo {
+            color: #FFD700;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .main-headline {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .sub-text {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 150px;
+        }
+
+        .btn-primary {
+            background: #333;
+            color: white;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #333;
+            border: 2px solid #333;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .content-grid {
+            padding: 0 20px 40px 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .grid-item {
+            background: #e0e0e0;
+            border-radius: 15px;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .placeholder-icon {
+            width: 40px;
+            height: 40px;
+            background: #ccc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #999;
+        }
+
+        @media (max-width: 480px) {
+            .main-card {
+                margin: 50px 15px 20px 15px;
+                padding: 30px 20px;
+            }
+
+            .main-headline {
+                font-size: 28px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                max-width: 200px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-text">메인 홈 화면 - 1</div>
+    
+    <div class="main-card">
+        <div class="logo">KB HUG</div>
+        <div class="main-headline">
+            오늘 하루,<br>
+            나를 위한 5분
+        </div>
+        <div class="sub-text">
+            혼자 담아두지 마세요. 여기에 털어놓으세요.
+        </div>
+        <div class="action-buttons">
+            <a href="/records" class="btn btn-primary">기록 보기</a>
+            <a href="/chat_topics" class="btn btn-secondary">대화 시작하기</a>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="placeholder-icon">🏔️</div>
+            </div>
+            <div class="grid-item">
+                <div class="placeholder-icon">🏔️</div>
+            </div>
+            <div class="grid-item">
+                <div class="placeholder-icon">🏔️</div>
+            </div>
+            <div class="grid-item">
+                <div class="placeholder-icon">🏔️</div>
+            </div>
+            <div class="grid-item">
+                <div class="placeholder-icon">🏔️</div>
+            </div>
+            <div class="grid-item">
+                <div class="placeholder-icon">🏔️</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

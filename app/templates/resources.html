@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KB HUG - 리소스</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .header-text {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding-top: 40px;
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        .resource-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            line-height: 1.3;
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .action-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .action-link:hover {
+            color: #007AFF;
+        }
+
+        .arrow {
+            font-size: 12px;
+        }
+
+        .resource-thumbnail {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 8px;
+            margin: 10px 0;
+            object-fit: cover;
+        }
+
+        .resource-meta {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .blog-info {
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .date-info {
+            color: #666;
+        }
+
+        .home-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding-top: 30px;
+            }
+
+            .main-title {
+                font-size: 20px;
+            }
+
+            .resource-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-text">대화 종류 후 상세 링크 페이지 -5</div>
+    
+    <div class="container">
+        <div class="main-title">
+            당신의 마음을 치유하는 다양한 리소스를 만나보세요
+        </div>
+
+        <div id="resourcesContainer">
+            <!-- 동적으로 리소스가 로드됩니다 -->
+        </div>
+    </div>
+
+    <button class="home-button" onclick="goHome()">🏠 홈으로</button>
+
+    <script>
+        // 리소스 타입별 아이콘 매핑
+        const resourceIcons = {
+            'counseling': '🌱',
+            'education': '📚',
+            'blog': '💬',
+            'book': '🧠',
+            'video': '🎥',
+            'article': '📄'
+        };
+
+        // 페이지 로드 시 리소스 로드
+        window.onload = function() {
+            loadResources();
+        };
+
+        function goHome() {
+            window.location.href = '/home';
+        }
+
+        function loadResources() {
+            const container = document.getElementById('resourcesContainer');
+            
+            // localStorage에서 추천된 리소스 가져오기
+            const recommendedResources = localStorage.getItem('recommendedResources');
+            
+            if (recommendedResources) {
+                try {
+                    const resources = JSON.parse(recommendedResources);
+                    displayResources(resources);
+                } catch (e) {
+                    console.error('리소스 파싱 오류:', e);
+                    displayDefaultResources();
+                }
+            } else {
+                displayDefaultResources();
+            }
+        }
+
+        function displayResources(resources) {
+            const container = document.getElementById('resourcesContainer');
+            container.innerHTML = '';
+
+            resources.forEach((resource, index) => {
+                const icon = resourceIcons[resource.type] || '📄';
+                const actionText = getActionText(resource.type);
+                
+                // 블로그 정보 표시
+                const blogInfo = resource.source ? `<div class="blog-info">${resource.source}</div>` : '';
+                const dateInfo = resource.date ? `<div class="date-info">${resource.date}</div>` : '';
+                
+                // 썸네일 이미지 (있는 경우)
+                const thumbnail = resource.thumbnail ? `<img src="${resource.thumbnail}" alt="썸네일" class="resource-thumbnail">` : '';
+                
+                const resourceHtml = `
+                    <div class="resource-section">
+                        <div class="section-header">
+                            <div class="section-icon">${icon}</div>
+                            <div class="section-title">
+                                ${resource.title}
+                            </div>
+                        </div>
+                        ${thumbnail}
+                        <div class="section-description">
+                            ${resource.description}
+                        </div>
+                        <div class="resource-meta">
+                            ${blogInfo}
+                            ${dateInfo}
+                        </div>
+                        <a href="${resource.url}" target="_blank" class="action-link">
+                            ${actionText} <span class="arrow">></span>
+                        </a>
+                    </div>
+                `;
+                
+                container.innerHTML += resourceHtml;
+            });
+        }
+
+        function displayDefaultResources() {
+            const defaultResources = [
+                {
+                    title: "전문가의 도움을 받을 수 있는 기회를 제공합니다",
+                    description: "KB 상담 프로그램의 전문 상담사 연결을 통해 더 나은 감정 관리를 시작하세요.",
+                    url: "#",
+                    type: "counseling"
+                },
+                {
+                    title: "비슷한 고민의 블로그를 추천합니다",
+                    description: "같은 고민을 가진 사람들과의 이야기를 통해 위로와 지혜를 얻을 수 있습니다.",
+                    url: "#",
+                    type: "blog"
+                },
+                {
+                    title: "심리 책 추천으로 더 깊이 있는 이해를 가져보세요",
+                    description: "추천 도서 목록을 통해 심리학적 통찰을 얻고 마음의 안정을 찾으세요.",
+                    url: "#",
+                    type: "book"
+                }
+            ];
+            
+            displayResources(defaultResources);
+        }
+
+        function getActionText(type) {
+            const actionTexts = {
+                'counseling': '자세히',
+                'education': '학습하기',
+                'blog': '읽기',
+                'book': '추천',
+                'video': '보기',
+                'article': '읽기'
+            };
+            
+            return actionTexts[type] || '보기';
+        }
+    </script>
+</body>
+</html>
